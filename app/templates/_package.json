@@ -1,0 +1,62 @@
+{
+	"name": "<%= moduleName %>",
+	"version": "0.1.0",
+	"description": "<%= moduleName %> : <%= moduleDescription %>",
+	"license": "MIT",
+	"main": "index.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/<%= githubUsername %>/<%= repoName %>.git"
+	},
+	"bugs": {
+		"url": "https://github.com/<%= githubUsername %>/<%= repoName %>/issues"
+	},
+	"homepage": "https://github.com/<%= githubUsername %>/<%= repoName %>#readme",
+	"author": {
+		"name": "<%= name %>",
+		"email": "<%= email %>",
+		"url": "<%= humanizedWebsite %>"
+	},<% if (cli) { %>
+	"bin": "cli.js",<% } %>
+	"engines": {
+		"node": ">=8"
+	},
+	"scripts": {
+		"test": "xo && <% if (nyc) { %>nyc <% } %>ava"
+	},
+	"files": [
+		"index.js"<% if (cli) { %>,
+		"cli.js"<% } %>
+	],
+	"keywords": [<% if (cli) { %>
+		"cli-app",
+		"cli",<% } %>
+		""
+	],
+	"dependencies": {<% if (cli) { %>
+		"meow": "^5.0.0"
+	<% } %>},
+	"devDependencies": {
+		"@commitlint/cli": "^8.1.0",
+		"@commitlint/config-conventional": "^8.1.0",
+		"ava": "^2.3.0",<% if (coveralls) { %>
+		"coveralls": "^3.0.6",<% } %>
+		"husky": "^3.0.5",
+		"markdown-magic": "^1.0.0",
+		"markdown-magic-package-json": "^2.0.1",<% if (nyc) { %>
+		"nyc": "^14.1.1",<% } %>
+		"xo": "^0.24.0"
+	}<% if (coveralls) { %>,
+	"nyc": {
+		"reporter": [
+			"lcov",
+			"text"
+		]
+	},<% } %>
+	"husky": {
+		"hooks": {
+			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+			"pre-commit": "node ./script/generate-docs.js"
+		}
+	}
+}

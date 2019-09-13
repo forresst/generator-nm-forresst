@@ -1,0 +1,5 @@
+node_modules
+.vscode
+yarn.lock<% if (nyc) { %>
+.nyc_output
+coverage<% } %>
